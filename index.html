@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero 的日语资源站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui;
+        }
+
+        body {
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        /* 统计框 */
+        .stats-box {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            font-size: 14px;
+        }
+
+        /* 分页容器 */
+        .page-container {
+            position: relative;
+            height: 100vh;
+            width: 300%;
+            display: flex;
+            transition: transform 0.5s ease;
+            margin-top: 60px;
+        }
+
+        .page {
+            width: 33.333%;
+            height: calc(100vh - 80px);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* 导航标签 */
+        .nav-tabs {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: white;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .nav-tab {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            background: #f1f3f5;
+            color: #495057;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab.active {
+            background: #4263eb;
+            color: white;
+        }
+
+        /* 内容区域 */
+        .section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            color: #4263eb;
+            border-left: 4px solid #4263eb;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 分类菜单 */
+        .category-menu {
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .category-item {
+            margin-bottom: 1rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .category-header:hover {
+            background: #e9ecef;
+        }
+
+        .category-header i {
+            color: #4263eb;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .arrow {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sub-links {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .category-item.active .sub-links {
+            max-height: 2000px;
+        }
+
+        .category-item.active .arrow {
+            transform: rotate(90deg);
+        }
+
+        /* 链接卡片 */
+        .link-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin: 0.5rem;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            text-decoration: none;
+            color: #333;
+        }
+
+        .link-content h4 {
+            color: #2c3e50;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .link-content p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .click-count {
+            background: #f1f3f5;
+            padding: 0.2rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+        }
+
+        /* 音乐播放器 */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 12px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                gap: 1rem;
+                padding: 0.8rem;
+            }
+            
+            .nav-tab {
+                padding: 0.6rem 1.2rem;
+            }
+            
+            .section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 访问统计 -->
+    <div class="stats-box">
+        <span>👥 访客数：<span id="busuanzi_value_site_uv"></span></span>
+        <span style="margin:0 10px">|</span>
+        <span>👆 总点击：<span id="total-clicks">0</span></span>
+    </div>
+
+    <!-- 导航标签 -->
+    <nav class="nav-tabs">
+        <button class="nav-tab active" onclick="switchPage(0)">日本語</button>
+        <button class="nav-tab" onclick="switchPage(1)">AI工具</button>
+        <button class="nav-tab" onclick="switchPage(2)">番剧资源</button>
+    </nav>
+
+    <!-- 分页容器 -->
+    <div class="page-container" id="pageContainer">
+        <!-- 日语页面 -->
+        <div class="page">
+            <div class="section">
+                <h2 class="section-title">日语学习资源</h2>
+                <div class="category-menu">
+                    <!-- 基础学习 -->
+                    <div class="category-item">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <i class="fas fa-book"></i>
+                            <h3>基础学习工具</h3>
+                            <span class="arrow">▶</span>
+                        </div>
+                        <div class="sub-links">
+                            <a href="https://verbhandbook.ninjal.ac.jp/headwords/" target="_blank" 
+                               class="link-card" onclick="trackClick('jp_verb')">
+                                <div class="link-content">
+                                    <h4>动词活用词典</h4>
+                                    <p>涵盖所有动词活用形的详细解析</p>
+                                </div>
+                                <span class="click-count" id="jp_verb-count">0</span>
+                            </a>
+                            <a href="https://www.kanjipedia.jp/" target="_blank" 
+                               class="link-card" onclick="trackClick('jp_kanji')">
+                                <div class="link-content">
+                                    <h4>汉字辞典</h4>
+                                    <p>日本汉字读音、笔顺查询</p>
+                                </div>
+                                <span class="click-count" id="jp_kanji-count">0</span>
+                            </a>
+                            <a href="https://keirinkan-online.jp/" target="_blank" 
+                               class="link-card" onclick="trackClick('jp_grammar')">
+                                <div class="link-content">
+                                    <h4>语法指南</h4>
+                                    <p>系统学习日语语法体系</p>
+                                </div>
+                                <span class="click-count" id="jp_grammar-count">0</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 进阶资源 -->
+                    <div class="category-item">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h3>进阶学习资源</h3>
+                            <span class="arrow">▶</span>
+                        </div>
+                        <div class="sub-links">
+                            <a href="https://yoji-jukugo.com/" target="_blank" 
+                               class="link-card" onclick="trackClick('jp_yojijukugo')">
+                                <div class="link-content">
+                                    <h4>四字熟语大全</h4>
+                                    <p>收录2000+常用四字成语</p>
+                                </div>
+                                <span class="click-count" id="jp_yojijukugo-count">0</span>
+                            </a>
+                            <a href="https://vvlexicon.ninjal.ac.jp/db/" target="_blank" 
+                               class="link-card" onclick="trackClick('jp_compound_verb')">
+                                <div class="link-content">
+                                    <h4>复合动词解析</h4>
+                                    <p>复合动词构成规则与用例</p>
+                                </div>
+                                <span class="click-count" id="jp_compound_verb-count">0</span>
+                            </a>
+                            <a href="https://kotowaza-dictionary.jp/" target="_blank" 
+                               class="link-card" onclick="trackClick('jp_proverbs')">
+                                <div class="link-content">
+                                    <h4>谚语词典</h4>
+                                    <p>日本传统谚语集</p>
+                                </div>
+                                <span class="click-count" id="jp_proverbs-count">0</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 文化相关 -->
+                    <div class="category-item">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <i class="fas fa-landmark"></i>
+                            <h3>日本文化</h3>
+                            <span class="arrow">▶</span>
+                        </div>
+                        <div class="sub-links">
+                            <a href="https://jpnculture.net/" target="_blank" 
+                               class="link-card" onclick="trackClick('jp_culture')">
+                                <div class="link-content">
+                                    <h4>文化百科</h4>
+                                    <p>日本传统文化全解析</p>
+                                </div>
+                                <span class="click-count" id="jp_culture-count">0</span>
+                            </a>
+                            <a href="https://www.douwa-douyou.jp/index.shtml" target="_blank" 
+                               class="link-card" onclick="trackClick('jp_fairytale')">
+                                <div class="link-content">
+                                    <h4>日本童话集</h4>
+                                    <p>经典民间故事在线阅读</p>
+                                </div>
+                                <span class="click-count" id="jp_fairytale-count">0</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI工具页面（示例） -->
+        <div class="page">
+            <div class="section">
+                <h2 class="section-title">AI工具推荐</h2>
+                <!-- 内容示例... -->
+            </div>
+        </div>
+
+        <!-- 番剧页面（示例） -->
+        <div class="page">
+            <div class="section">
+                <h2 class="section-title">番剧资源导航</h2>
+                <!-- 内容示例... -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 音乐播放器 -->
+    <div class="music-player">
+        <audio id="bgm" src="https://cdn.jsdelivr.net/gh/your-repo/background-music.mp3"></audio>
+        <button onclick="togglePlay()" style="border:none;background:none;cursor:pointer">
+            <i class="fas fa-play" id="play-icon"></i>
+        </button>
+        <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5" 
+               style="width:120px" oninput="adjustVolume(this.value)">
+    </div>
+
+    <script>
+        // 分页切换
+        function switchPage(pageIndex) {
+            const container = document.getElementById('pageContainer');
+            container.style.transform = `translateX(-${pageIndex * 33.333}%)`;
+            
+            document.querySelectorAll('.nav-tab').forEach((tab, index) => {
+                index === pageIndex 
+                    ? tab.classList.add('active')
+                    : tab.classList.remove('active');
+            });
+        }
+
+        // 分类菜单切换
+        function toggleCategory(header) {
+            const category = header.parentElement;
+            category.classList.toggle('active');
+        }
+
+        // 点击统计
+        let totalClicks = localStorage.getItem('totalClicks') || 0;
+        const jpTrackItems = [
+            'jp_verb', 'jp_kanji', 'jp_grammar',
+            'jp_yojijukugo', 'jp_compound_verb', 'jp_proverbs',
+            'jp_culture', 'jp_fairytale'
+        ];
+
+        function trackClick(siteId) {
+            totalClicks++;
+            localStorage.setItem('totalClicks', totalClicks);
+            document.getElementById('total-clicks').textContent = totalClicks;
+
+            const count = localStorage.getItem(siteId) || 0;
+            localStorage.setItem(siteId, parseInt(count) + 1);
+            document.getElementById(`${siteId}-count`).textContent = parseInt(count) + 1;
+        }
+
+        // 初始化统计
+        window.addEventListener('load', () => {
+            document.getElementById('total-clicks').textContent = totalClicks;
+            jpTrackItems.forEach(id => {
+                const count = localStorage.getItem(id) || 0;
+                document.getElementById(`${id}-count`).textContent = count;
+            });
+        });
+
+        // 音乐控制
+        const audio = document.getElementById('bgm');
+        let isPlaying = false;
+
+        function togglePlay() {
+            isPlaying ? audio.pause() : audio.play();
+            isPlaying = !isPlaying;
+            document.getElementById('play-icon').className = 
+                isPlaying ? 'fas fa-pause' : 'fas fa-play';
+        }
+
+        function adjustVolume(value) {
+            audio.volume = value;
+            localStorage.setItem('musicVolume', value);
+        }
+
+        // 初始化音量
+        const savedVolume = localStorage.getItem('musicVolume') || 0.5;
+        audio.volume = savedVolume;
+        document.getElementById('volume').value = savedVolume;
+    </script>
+</body>
+</html>
