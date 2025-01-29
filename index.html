@@ -102,13 +102,33 @@
             padding: 1rem;
         }
 
+        /* 提高选择器优先级 */
+        .category-item.active > .sub-links {
+            display: block;
+        }
+        
+        .category-item > .sub-links {
+            display: none;
+        }
+        
+        /* 增加灵活性 */
+        .category-item > .sub-links.hidden {
+            visibility: hidden;
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .category-item > .sub-links.visible {
+            visibility: visible;
+            height: auto;
+        }
+        
         .category-item {
             margin-bottom: 1rem;
             border: 1px solid #eee;
             border-radius: 8px;
             overflow: hidden;
         }
-
         .category-header {
             display: flex;
             align-items: center;
@@ -331,22 +351,186 @@
             </div>
         </div>
 
-        <!-- AI工具页面（示例） -->
-        <div class="page">
+       
+        <!-- AI工具页面 -->
+           <div class="page">
             <div class="section">
                 <h2 class="section-title">AI工具推荐</h2>
-                <!-- 内容示例... -->
+                <div class="category-menu">
+                    <!-- AI写作 -->
+                    <div class="category-item">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <i class="fas fa-keyboard"></i>
+                            <h3>AI文本工具</h3>
+                            <span class="arrow">▶</span>
+                        </div>
+                        <div class="sub-links">
+                            <a href="https://chat.openai.com" target="_blank" 
+                               class="link-card" onclick="trackClick('ai_chatgpt')">
+                                <div class="link-content">
+                            <h4>ChatGPT</h4>
+                            <p>多场景对话式AI助手</p>
+                        </div>
+                        <span class="click-count" id="ai_chatgpt-count">0</span>
+                    </a>
+                    <a href="https://claude.ai" target="_blank" 
+                       class="link-card" onclick="trackClick('ai_claude')">
+                        <div class="link-content">
+                            <h4>Claude</h4>
+                            <p>支持超长上下文处理</p>
+                        </div>
+                        <span class="click-count" id="ai_claude-count">0</span>
+                    </a>
+                </div>
+            </div>
+
+                    <!-- AI图像 -->
+                    <div class="category-item">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <i class="fas fa-palette"></i>
+                            <h3>AI图像生成</h3>
+                            <span class="arrow">▶</span>
+                        </div>
+                        <div class="sub-links">
+                            <a href="https://www.midjourney.com" target="_blank" 
+                               class="link-card" onclick="trackClick('ai_midjourney')">
+                        <div class="link-content">
+                            <h4>MidJourney</h4>
+                            <p>艺术风格图像生成</p>
+                        </div>
+                        <span class="click-count" id="ai_midjourney-count">0</span>
+                    </a>
+                    <a href="https://dreamstudio.ai" target="_blank" 
+                       class="link-card" onclick="trackClick('ai_stablediffusion')">
+                        <div class="link-content">
+                            <h4>Stable Diffusion</h4>
+                            <p>开源图像生成平台</p>
+                        </div>
+                        <span class="click-count" id="ai_stablediffusion-count">0</span>
+                    </a>
+                </div>
+            </div>
+
+                    <!-- AI视频 -->
+                    <div class="category-item">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <i class="fas fa-video"></i>
+                            <h3>AI视频工具</h3>
+                            <span class="arrow">▶</span>
+                        </div>
+                        <div class="sub-links">
+                            <a href="https://www.runwayml.com" target="_blank" 
+                               class="link-card" onclick="trackClick('ai_runway')">
+                        <div class="link-content">
+                            <h4>Runway</h4>
+                            <p>视频智能编辑工具套件</p>
+                        </div>
+                        <span class="click-count" id="ai_runway-count">0</span>
+                    </a>
+                    <a href="https://www.descript.com" target="_blank" 
+                       class="link-card" onclick="trackClick('ai_descript')">
+                        <div class="link-content">
+                            <h4>Descript</h4>
+                            <p>视频转录与AI配音</p>
+                        </div>
+                        <span class="click-count" id="ai_descript-count">0</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- 番剧页面（示例） -->
+
+        <!-- 番剧资源页面 -->
         <div class="page">
             <div class="section">
                 <h2 class="section-title">番剧资源导航</h2>
-                <!-- 内容示例... -->
+                <div class="category-menu">
+                    <!-- 在线观看 -->
+                    <div class="category-item">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <i class="fas fa-tv"></i>
+                            <h3>正版平台</h3>
+                            <span class="arrow">▶</span>
+                        </div>
+                        <div class="sub-links">
+                            <a href="https://www.bilibili.com" target="_blank" 
+                               class="link-card" onclick="trackClick('anime_bilibili')">
+                                <div class="link-content">
+                                    <h4>哔哩哔哩</h4>
+                                    <p>正版番剧弹幕平台</p>
+                                </div>
+                        <span class="click-count" id="anime_bilibili-count">0</span>
+                            </a>
+                            <!-- 新增低端影视 -->
+        <a href="https://ddys.info/" target="_blank" 
+        class="link-card" onclick="trackClick('anime_ddys')">
+         <div class="link-content">
+             <h4>低端影视</h4>
+             <p>高清影视资源下载</p>
+         </div>
+         <span class="click-count" id="anime_ddys-count">0</span>
+                    </a>
+                </div>
+            </div>
+
+                    <!-- 资讯社区 -->
+                    <div class="category-item">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <i class="fas fa-comments"></i>
+                            <h3>动漫社区</h3>
+                            <span class="arrow">▶</span>
+                        </div>
+                        <div class="sub-links">
+                            <a href="https://bgm.tv" target="_blank" 
+                               class="link-card" onclick="trackClick('anime_bangumi')">
+                                <div class="link-content">
+                                    <h4>Bangumi</h4>
+                                    <p>番组计划数据库</p>
+                                </div>
+                                <span class="click-count" id="anime_bangumi-count">0</span>
+                            </a>
+                            <a href="https://www.anikore.jp" target="_blank" 
+                               class="link-card" onclick="trackClick('anime_anikore')">
+                                <div class="link-content">
+                                    <h4>Anikore</h4>
+                                    <p>日本动漫评分网站</p>
+                                </div>
+                                <span class="click-count" id="anime_anikore-count">0</span>
+                            </a>
+                        </div>
+                    </div>
+
+                            <!-- 资源下载 -->
+                    <div class="category-item">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                             <i class="fas fa-download"></i>
+                             <h3>资源下载</h3>
+                             <span class="arrow">▶</span>
+                        </div>
+                        <div class="sub-links">
+                            <a href="https://acg.rip" target="_blank" 
+                               class="link-card" onclick="trackClick('anime_acgrip')">
+                                <div class="link-content">
+                                    <h4>ACG.RIP</h4>
+                                    <p>动漫资源聚合站</p>
+                                </div>
+                                <span class="click-count" id="anime_acgrip-count">0</span>
+                            </a>
+                            <a href="https://share.dmhy.org" target="_blank" 
+                               class="link-card" onclick="trackClick('anime_dmhy')">
+                                <div class="link-content">
+                                    <h4>动漫花园</h4>
+                                    <p>种子资源聚合站</p>
+                                </div>
+                                <span class="click-count" id="anime_dmhy-count">0</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
     <!-- 音乐播放器 -->
     <div class="music-player">
@@ -358,72 +542,95 @@
                style="width:120px" oninput="adjustVolume(this.value)">
     </div>
 
-    <script>
-        // 分页切换
-        function switchPage(pageIndex) {
-            const container = document.getElementById('pageContainer');
-            container.style.transform = `translateX(-${pageIndex * 33.333}%)`;
-            
-            document.querySelectorAll('.nav-tab').forEach((tab, index) => {
-                index === pageIndex 
-                    ? tab.classList.add('active')
-                    : tab.classList.remove('active');
-            });
-        }
+ <script>
+    // 分页切换
+    function switchPage(pageIndex) {
+        const container = document.getElementById('pageContainer');
+        container.style.transform = `translateX(-${pageIndex * 33.333}%)`;
 
-        // 分类菜单切换
-        function toggleCategory(header) {
-            const category = header.parentElement;
-            category.classList.toggle('active');
-        }
-
-        // 点击统计
-        let totalClicks = localStorage.getItem('totalClicks') || 0;
-        const jpTrackItems = [
-            'jp_verb', 'jp_kanji', 'jp_grammar',
-            'jp_yojijukugo', 'jp_compound_verb', 'jp_proverbs',
-            'jp_culture', 'jp_fairytale'
-        ];
-
-        function trackClick(siteId) {
-            totalClicks++;
-            localStorage.setItem('totalClicks', totalClicks);
-            document.getElementById('total-clicks').textContent = totalClicks;
-
-            const count = localStorage.getItem(siteId) || 0;
-            localStorage.setItem(siteId, parseInt(count) + 1);
-            document.getElementById(`${siteId}-count`).textContent = parseInt(count) + 1;
-        }
-
-        // 初始化统计
-        window.addEventListener('load', () => {
-            document.getElementById('total-clicks').textContent = totalClicks;
-            jpTrackItems.forEach(id => {
-                const count = localStorage.getItem(id) || 0;
-                document.getElementById(`${id}-count`).textContent = count;
-            });
+        document.querySelectorAll('.nav-tab').forEach((tab, index) => {
+            index === pageIndex 
+                ? tab.classList.add('active')
+                : tab.classList.remove('active');
         });
+    }
 
-        // 音乐控制
-        const audio = document.getElementById('bgm');
-        let isPlaying = false;
+    // 分类菜单切换
+    function toggleCategory(header) {
+        const category = header.parentElement;
+        category.classList.toggle('active');
+    }
 
-        function togglePlay() {
-            isPlaying ? audio.pause() : audio.play();
-            isPlaying = !isPlaying;
-            document.getElementById('play-icon').className = 
-                isPlaying ? 'fas fa-pause' : 'fas fa-play';
+    // 点击统计
+    class Track {
+        constructor() {
+            this.totalClicks = localStorage.getItem('totalClicks') || 0;
+            this.siteCounts = {};
         }
 
-        function adjustVolume(value) {
-            audio.volume = value;
-            localStorage.setItem('musicVolume', value);
+        incrementTotal() {
+            this.totalClicks++;
+            localStorage.setItem('totalClicks', this.totalClicks);
+            document.getElementById('total-clicks').textContent = this.totalClicks;
         }
+
+        incrementSite(siteId) {
+            const count = (this.siteCounts[siteId] || 0) + 1;
+            this.siteCounts[siteId] = count;
+            localStorage.setItem(siteId, count);
+            document.getElementById(`${siteId}-count`).textContent = count;
+        }
+    }
+
+    const track = new Track();
+
+    // 初始化统计
+    window.addEventListener('load', () => {
+        document.getElementById('total-clicks').textContent = track.totalClicks;
+        track.siteCounts = JSON.parse(localStorage.getItem('siteCounts')) || {};
+
+        Object.keys(track.siteCounts).forEach(id => {
+            document.getElementById(`${id}-count`).textContent = track.siteCounts[id];
+        });
 
         // 初始化音量
         const savedVolume = localStorage.getItem('musicVolume') || 0.5;
         audio.volume = savedVolume;
         document.getElementById('volume').value = savedVolume;
-    </script>
+
+        // 恢复播放状态
+        const wasPlaying = localStorage.getItem('wasPlaying') === 'true';
+        if (wasPlaying) {
+            audio.play();
+            isPlaying = true;
+            document.getElementById('play-icon').className = 'fas fa-pause';
+        }
+    });
+
+    // 点击统计
+    function trackClick(siteId) {
+        track.incrementTotal();
+        track.incrementSite(siteId);
+    }
+
+    // 音乐控制
+    const audio = document.getElementById('bgm');
+    let isPlaying = false;
+
+    function togglePlay() {
+        isPlaying ? audio.pause() : audio.play();
+        isPlaying = !isPlaying;
+        document.getElementById('play-icon').className = 
+            isPlaying ? 'fas fa-pause' : 'fas fa-play';
+
+        localStorage.setItem('wasPlaying', isPlaying);
+    }
+
+    function adjustVolume(value) {
+        audio.volume = value;
+        localStorage.setItem('musicVolume', value);
+    }
+</script>
+</div>
 </body>
-</html>
+</html> 
